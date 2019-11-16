@@ -1,0 +1,26 @@
+import setuptools.command.install
+import shutil
+from distutils.sysconfig import get_python_lib
+
+
+class CompiledLibInstall(setuptools.command.install.install):
+    """
+    This is fed to CMake and spit out with some text replacements
+    It is used to install swig packages as python packages
+    credit: https://github.com/danielunderwood/swig-example/blob/master/swig/python/setup.py.in
+
+    """
+    def run(self):
+        filenames = '${PYTHON_INSTALL_FILES}'.split(';')
+        install_dir = get_python_lib()
+        [shutil.copy(filename, install_dir) for filename in filenames]
+
+
+if __name__ == '__main__':
+    setuptools.setup(
+        name='${PROJECT_NAME}',
+        version='${PROJECT_VERSION}',
+        packages=['${PROJECT_NAME}'],
+        license='ISC',
+        cmdclass={'install': CompiledLibInstall}
+    )
