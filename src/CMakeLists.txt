@@ -48,8 +48,6 @@ include(FindSWIG)
 include(UseSWIG)
 find_package(PythonLibs 3 REQUIRED)
 find_package(PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
-message("PYTHONLIBS_VERSION_STRING: ${PYTHONLIBS_VERSION_STRING}")
-message("CMAKE_SWIG_FLAGS: ${CMAKE_SWIG_FLAGS}")
 set_property(SOURCE thermal.i PROPERTY CPLUSPLUS ON)
 SWIG_ADD_LIBRARY(thermal
         LANGUAGE python
