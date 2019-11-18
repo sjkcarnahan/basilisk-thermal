@@ -66,6 +66,6 @@ set(SETUP_PY_IN ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in)
 set(SETUP_PY_OUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
 configure_file(${SETUP_PY_IN} ${SETUP_PY_OUT})
 add_custom_target(install-python ALL
-        DEPENDS _thermal
+        DEPENDS thermal
         COMMAND python ${SETUP_PY_OUT} install)
 
