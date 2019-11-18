@@ -35,14 +35,15 @@ project(basilisk-thermal
         HOMEPAGE_URL "my github page"
         LANGUAGES CXX)
 find_package(BSK CONFIG REQUIRED)
-get_target_property(bsk_src BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
 set(sources models/thermalConductor.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
+variable_watch(framework_include)
+get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(basilisk-thermal
-        PUBLIC
+        PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${bsk_src})
+        ${framework_include})
 
 include(FindSWIG)
 include(UseSWIG)
@@ -50,7 +51,7 @@ find_package(PythonLibs 3 REQUIRED)
 find_package(PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
 set_source_files_properties(SOURCE thermal.i PROPERTIES
         CPLUSPLUS ON
-        INCLUDE_DIRECTORIES ${bsk_src})
+        INCLUDE_DIRECTORIES ${framework_include})
 SWIG_ADD_LIBRARY(thermal
         LANGUAGE python
         TYPE MODULE
@@ -58,7 +59,7 @@ SWIG_ADD_LIBRARY(thermal
 swig_link_libraries(thermal basilisk-thermal)
 swig_link_libraries(thermal ${PYTHON_LIBRARIES})
 swig_link_libraries(thermal BSK::basilisk-framework)
-include_directories(thermal ${PYTHON_INCLUDE_PATH})
+include_directories(thermal ${PYTHON_INCLUDE_PATH} ${CMAKE_CURRENT_SOURCE_DIR})
 set(PYTHON_INSTALL_FILES
         ${CMAKE_CURRENT_BINARY_DIR}/thermal.py
         ${CMAKE_CURRENT_BINARY_DIR}/_thermal.so)

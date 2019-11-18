@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "system_models/sys_model.h"
+#include "framework/system_models/sys_model.h"
 
 class ThermalConductor: public SysModel {
 public:
