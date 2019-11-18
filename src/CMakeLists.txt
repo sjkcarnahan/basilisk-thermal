@@ -36,7 +36,7 @@ project(basilisk-thermal
         LANGUAGES CXX)
 find_package(BSK REQUIRED)
 get_target_property(bsk_src BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
-set(sources thermalConductor.cpp)
+set(sources models/thermalConductor.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 target_include_directories(basilisk-thermal
