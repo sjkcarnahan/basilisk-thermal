@@ -20,6 +20,9 @@
 #pragma once
 
 #include "framework/system_models/sys_model.h"
+#include "framework/messaging/readFunctor.h"
+#include "thermalTypes.h"
+#include "messages/TemperatureMsg.h"
 
 class ThermalConductor: public SysModel {
 public:
@@ -28,4 +31,10 @@ public:
     void IntegratedInit(){}
     void UpdateState(uint64_t CurrentSimNanos){}
     void Reset(uint64_t CurrentSimNanos){}
+
+public:
+    Conductance_t conductance;
+    Temperature_t upstream_temp;
+    Temperature_t downstream_temp;
+    ReadFunctor<TemperatureMsg> readUpstreamTemperature;
 };

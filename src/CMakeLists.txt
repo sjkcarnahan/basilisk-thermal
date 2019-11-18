@@ -38,7 +38,6 @@ find_package(BSK CONFIG REQUIRED)
 set(sources models/thermalConductor.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
-variable_watch(framework_include)
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(basilisk-thermal
         PRIVATE
@@ -68,5 +67,5 @@ set(SETUP_PY_OUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
 configure_file(${SETUP_PY_IN} ${SETUP_PY_OUT})
 add_custom_target(install-python ALL
         DEPENDS thermal
-        COMMAND python ${SETUP_PY_OUT} install)
+        COMMAND python3 ${SETUP_PY_OUT} install)
 

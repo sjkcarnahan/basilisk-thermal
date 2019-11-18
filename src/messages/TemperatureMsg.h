@@ -18,8 +18,8 @@
  */
 
 #pragma once
-#include "../thermalTypes.h"
+#include "thermalTypes.h"
 /*! @brief Temperature Simulation Message [Kelvin] */
 typedef struct {
-    temperature_K temperature;  // [K]
+    Temperature_t temperature;  // [K]
 }TemperatureMsg;
