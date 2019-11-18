@@ -34,7 +34,7 @@ project(basilisk-thermal
         DESCRIPTION "thermal package for basilisk"
         HOMEPAGE_URL "my github page"
         LANGUAGES CXX)
-find_package(BSK REQUIRED)
+find_package(BSK CONFIG REQUIRED)
 get_target_property(bsk_src BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
 set(sources models/thermalConductor.cpp)
 add_library(basilisk-thermal SHARED
@@ -48,7 +48,9 @@ include(FindSWIG)
 include(UseSWIG)
 find_package(PythonLibs 3 REQUIRED)
 find_package(PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
-set_property(SOURCE thermal.i PROPERTY CPLUSPLUS ON)
+set_source_files_properties(SOURCE thermal.i PROPERTIES
+        CPLUSPLUS ON
+        INCLUDE_DIRECTORIES ${bsk_src})
 SWIG_ADD_LIBRARY(thermal
         LANGUAGE python
         TYPE MODULE
