@@ -21,4 +21,11 @@
 
 #include "system_models/sys_model.h"
 
-class ThermalConductor: public SysModel {};
+class ThermalConductor: public SysModel {
+public:
+    void SelfInit(){}
+    void CrossInit(){}
+    void IntegratedInit(){}
+    void UpdateState(uint64_t CurrentSimNanos){}
+    void Reset(uint64_t CurrentSimNanos){}
+};
