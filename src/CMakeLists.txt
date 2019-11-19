@@ -78,3 +78,6 @@ add_custom_target(install-python ALL
         DEPENDS thermal
         COMMAND python3 ${SETUP_PY_OUT} install)
 
+export(TARGETS basilisk-thermal NAMESPACE BSK:: FILE BSKThermalConfig.cmake)
+set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
+export(PACKAGE BSKThermal)
