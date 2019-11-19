@@ -3,3 +3,5 @@ using Conductance_t = double;  // [W/K] conductance value for QDot = C DT
 using HeatRate_t = double;  // [W] heat rate in J/s = W
 using Mass_t = double;  // [kg] mass in kg
 using SpecificHeat_t = double;  // [J/kg/K] specific heat of material
+using Area_t = double;  // [m2]
+using Emittance_t = double;  // []

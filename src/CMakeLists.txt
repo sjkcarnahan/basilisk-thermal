@@ -35,9 +35,11 @@ project(basilisk-thermal
         HOMEPAGE_URL "my github page"
         LANGUAGES CXX)
 find_package(BSK REQUIRED)
+#find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 set(sources
         models/thermalConductor.cpp
-        models/thermalMass.cpp)
+        models/thermalMass.cpp
+        models/thermalEmitter.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
@@ -46,6 +48,7 @@ target_include_directories(basilisk-thermal
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${framework_include})
 target_link_libraries(basilisk-thermal BSK::basilisk-framework)
+#target_link_libraries(basilisk-thermal Eigen3::Eigen)
 
 include(FindSWIG)
 include(UseSWIG)
