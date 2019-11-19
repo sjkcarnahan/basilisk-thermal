@@ -18,8 +18,26 @@
  */
 
 #pragma once
-#include "thermalTypes.h"
-/*! @brief Temperature Simulation Message [Kelvin] */
-typedef struct {
-    Temperature_t temperature;  // [K]
-}TemperatureMsg;
+
+#include "framework/system_models/sys_model.h"
+#include "framework/messaging/readFunctor.h"
+#include "framework/messaging/writeFunctor.h"
+#include "framework/messaging/message.h"
+#include "thermal/thermalTypes.h"
+#include "thermal/messages/TemperatureMsg.h"
+#include "thermal/messages/HeatRateMsg.h"
+
+class ThermalConductor: public SysModel {
+public:
+    ThermalConductor();
+    void UpdateState(uint64_t CurrentSimNanos) override;
+
+public:
+    Conductance_t conductance;  // conductance of the pathway from up to down node
+    ReadFunctor<TemperatureMsg> readUpstreamTemperature;
+    ReadFunctor<TemperatureMsg> readDownstreamTemperature;
+    SimMessage<HeatRateMsg> heatRateMsg;
+
+private:
+    WriteFunctor<HeatRateMsg> writeHeatRate;
+};

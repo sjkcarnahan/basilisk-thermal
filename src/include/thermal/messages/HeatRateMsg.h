@@ -18,7 +18,7 @@
  */
 
 #pragma once
-#include "thermalTypes.h"
+#include "thermal/thermalTypes.h"
 /*! @brief Heat Rate Message [W] */
 typedef struct {
     HeatRate_t heatRate;  // [W]

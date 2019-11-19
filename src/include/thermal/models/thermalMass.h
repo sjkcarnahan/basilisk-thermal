@@ -24,9 +24,9 @@
 #include "framework/messaging/readFunctor.h"
 #include "framework/messaging/writeFunctor.h"
 #include "framework/messaging/message.h"
-#include "messages/TemperatureMsg.h"
-#include "messages/HeatRateMsg.h"
-#include "thermalTypes.h"
+#include "thermal/messages/TemperatureMsg.h"
+#include "thermal/messages/HeatRateMsg.h"
+#include "thermal/thermalTypes.h"
 
 class ThermalMass: public SysModel {
 public:

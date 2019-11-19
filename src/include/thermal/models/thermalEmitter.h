@@ -19,25 +19,26 @@
 
 #pragma once
 
+#include <vector>
 #include "framework/system_models/sys_model.h"
 #include "framework/messaging/readFunctor.h"
 #include "framework/messaging/writeFunctor.h"
 #include "framework/messaging/message.h"
-#include "thermalTypes.h"
-#include "messages/TemperatureMsg.h"
-#include "messages/HeatRateMsg.h"
+#include "thermal/messages/TemperatureMsg.h"
+#include "thermal/messages/HeatRateMsg.h"
+#include "thermal/thermalTypes.h"
 
-class ThermalConductor: public SysModel {
+class ThermalEmitter: public SysModel {
 public:
-    ThermalConductor();
+    ThermalEmitter();
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
-    Conductance_t conductance;  // conductance of the pathway from up to down node
+    Area_t area;
+    Emittance_t epsilon;
     ReadFunctor<TemperatureMsg> readUpstreamTemperature;
-    ReadFunctor<TemperatureMsg> readDownstreamTemperature;
-    SimMessage<HeatRateMsg> heatRateMsg;
+    SimMessage<HeatRateMsg> outputHeatRateMsg;
 
 private:
-    WriteFunctor<HeatRateMsg> writeHeatRate;
+    WriteFunctor<HeatRateMsg> writeHeatRateMsg;
 };

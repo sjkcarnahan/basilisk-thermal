@@ -17,7 +17,7 @@
 
  */
 
-#include "thermalConductor.h"
+#include "thermal/models/thermalConductor.h"
 
 ThermalConductor::ThermalConductor() : conductance(1){this->writeHeatRate = this->heatRateMsg.get_writer();}
 

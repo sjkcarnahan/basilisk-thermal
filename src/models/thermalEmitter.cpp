@@ -17,8 +17,8 @@
 
  */
 #include <math.h>
-#include "thermalEmitter.h"
-#include "thermalConstants.h"
+#include "thermal/models/thermalEmitter.h"
+#include "thermal/thermalConstants.h"
 
 ThermalEmitter::ThermalEmitter() :
     area(1),
