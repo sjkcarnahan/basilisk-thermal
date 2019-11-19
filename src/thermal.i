@@ -1,5 +1,5 @@
 
-%module(package="basilisk.thermal", naturalvar=1) thermal
+%module(package="basilisk.thermal") thermal
 
 %include "std_vector.i"
 %include "stdint.i"
