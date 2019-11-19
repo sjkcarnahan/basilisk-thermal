@@ -21,20 +21,27 @@
 
 #include "framework/system_models/sys_model.h"
 #include "framework/messaging/readFunctor.h"
+#include "framework/messaging/writeFunctor.h"
+#include "framework/messaging/message.h"
 #include "thermalTypes.h"
 #include "messages/TemperatureMsg.h"
+#include "messages/HeatRateMsg.h"
 
 class ThermalConductor: public SysModel {
 public:
     void SelfInit(){}
     void CrossInit(){}
     void IntegratedInit(){}
-    void UpdateState(uint64_t CurrentSimNanos){}
+    void UpdateState(uint64_t CurrentSimNanos);
     void Reset(uint64_t CurrentSimNanos){}
 
 public:
-    Conductance_t conductance;
-    Temperature_t upstream_temp;
-    Temperature_t downstream_temp;
+    Conductance_t conductance;  // conductance of the pathway from up to down node
     ReadFunctor<TemperatureMsg> readUpstreamTemperature;
+    ReadFunctor<TemperatureMsg> readDownstreamTemperature;
+    SimMessage<HeatRateMsg> heatRateMsg;
+    HeatRate_t heatRate;
+
+private:
+    WriteFunctor<HeatRateMsg> writeHeatRate;
 };

@@ -34,7 +34,7 @@ project(basilisk-thermal
         DESCRIPTION "thermal package for basilisk"
         HOMEPAGE_URL "my github page"
         LANGUAGES CXX)
-find_package(BSK CONFIG REQUIRED)
+find_package(BSK REQUIRED)
 set(sources models/thermalConductor.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
@@ -43,6 +43,7 @@ target_include_directories(basilisk-thermal
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${framework_include})
+target_link_libraries(basilisk-thermal BSK::basilisk-framework)
 
 include(FindSWIG)
 include(UseSWIG)

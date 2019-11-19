@@ -17,11 +17,9 @@
 
  */
 
-#include "thermalConductor.h"
-
-void ThermalConductor::UpdateState(uint64_t CurrentSimNanos){
-    Temperature_t upstreamTemp = this->readUpstreamTemperature().temperature;
-    Temperature_t downstreamTemp = this->readDownstreamTemperature().temperature;
-    HeatRateMsg heatRate = {this->conductance * (upstreamTemp - downstreamTemp)};
-    this->writeHeatRate(heatRate);
-}
+#pragma once
+#include "thermalTypes.h"
+/*! @brief Heat Rate Message [W] */
+typedef struct {
+    HeatRate_t heatRate;  // [W]
+}HeatRateMsg;
