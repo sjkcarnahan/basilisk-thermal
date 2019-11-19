@@ -1,5 +1,8 @@
-%module(package="basilisk.thermal") thermal
+
+%module(package="basilisk.thermal", naturalvar=1) thermal
+
 %include "std_vector.i"
+%include "stdint.i"
 %include "framework/messaging.i"
 %{
 #include "framework/system_models/sys_model.h"
@@ -9,7 +12,9 @@
 %include "framework/system_models/sys_model.h"
 %include "models/thermalConductor.h"
 %include "thermalTypes.h"
-
+%{
+%}
 INSTANTIATE_MESSAGE_TEMPLATE(TemperatureMsg)
+INSTANTIATE_MESSAGE_TEMPLATE(HeatRateMsg)
 
 

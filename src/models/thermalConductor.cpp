@@ -19,6 +19,8 @@
 
 #include "thermalConductor.h"
 
+ThermalConductor::ThermalConductor() : conductance(1){this->writeHeatRate = this->heatRateMsg.get_writer();}
+
 void ThermalConductor::UpdateState(uint64_t CurrentSimNanos){
     Temperature_t upstreamTemp = this->readUpstreamTemperature().temperature;
     Temperature_t downstreamTemp = this->readDownstreamTemperature().temperature;

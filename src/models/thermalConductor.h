@@ -29,18 +29,14 @@
 
 class ThermalConductor: public SysModel {
 public:
-    void SelfInit(){}
-    void CrossInit(){}
-    void IntegratedInit(){}
-    void UpdateState(uint64_t CurrentSimNanos);
-    void Reset(uint64_t CurrentSimNanos){}
+    ThermalConductor();
+    void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
     Conductance_t conductance;  // conductance of the pathway from up to down node
     ReadFunctor<TemperatureMsg> readUpstreamTemperature;
     ReadFunctor<TemperatureMsg> readDownstreamTemperature;
     SimMessage<HeatRateMsg> heatRateMsg;
-    HeatRate_t heatRate;
 
 private:
     WriteFunctor<HeatRateMsg> writeHeatRate;
