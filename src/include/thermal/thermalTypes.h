@@ -5,3 +5,5 @@ using Mass_t = double;  // [kg] mass in kg
 using SpecificHeat_t = double;  // [J/kg/K] specific heat of material
 using Area_t = double;  // [m2]
 using Emittance_t = double;  // []
+using Absorptance_t = double; // []
+using Flux_t = double;  // [W/m2]

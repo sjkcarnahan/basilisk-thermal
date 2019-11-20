@@ -35,11 +35,16 @@ project(basilisk-thermal
         HOMEPAGE_URL "my github page"
         LANGUAGES CXX)
 find_package(BSK REQUIRED)
-#find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+find_package(BSKDynamics REQUIRED)
+find_package(BSKEnvironment REQUIRED)
+find_package(BSKNavigation REQUIRED)
+find_package(Python COMPONENTS NumPy)
+find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 set(sources
         models/thermalConductor.cpp
         models/thermalMass.cpp
-        models/thermalEmitter.cpp)
+        models/thermalEmitter.cpp
+        models/solarHeating.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
@@ -50,6 +55,10 @@ target_include_directories(basilisk-thermal
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(basilisk-thermal BSK::basilisk-framework)
+target_link_libraries(basilisk-thermal BSK::basilisk-dynamics)
+target_link_libraries(basilisk-thermal BSK::basilisk-environment)
+target_link_libraries(basilisk-thermal BSK::basilisk-navigation)
+target_link_libraries(basilisk-thermal Python::NumPy)
 #target_link_libraries(basilisk-thermal Eigen3::Eigen)
 
 include(FindSWIG)
