@@ -44,7 +44,8 @@ set(sources
         models/thermalConductor.cpp
         models/thermalMass.cpp
         models/thermalEmitter.cpp
-        models/solarHeating.cpp)
+        models/solarHeating.cpp
+        models/betaAngle.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)

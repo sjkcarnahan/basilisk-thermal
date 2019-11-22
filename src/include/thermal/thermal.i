@@ -12,6 +12,7 @@
 #include "thermal/models/thermalMass.h"
 #include "thermal/models/thermalEmitter.h"
 #include "thermal/models/solarHeating.h"
+#include "thermal/models/betaAngle.h"
 #include "thermal/thermalTypes.h"
 #include "thermal/thermalConstants.h"
 %}
@@ -20,11 +21,12 @@
 %include "thermal/models/thermalMass.h"
 %include "thermal/models/thermalEmitter.h"
 %include "thermal/models/solarHeating.h"
+%include "thermal/models/betaAngle.h"
 %include "thermal/thermalTypes.h"
 %include "thermal/thermalConstants.h"
-%{
-%}
-INSTANTIATE_MESSAGE_TEMPLATE(thermal, TemperatureMsg)
+
+INSTANTIATE_MESSAGE_TEMPLATE(thermal, BetaAngleMsg)
 INSTANTIATE_MESSAGE_TEMPLATE(thermal, HeatRateMsg)
+INSTANTIATE_MESSAGE_TEMPLATE(thermal, TemperatureMsg)
 
 
