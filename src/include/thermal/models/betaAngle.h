@@ -27,7 +27,7 @@
 #include "environment/messages/SpicePlanetStateSimMsg.h"
 #include "thermal/messages/BetaAngleMsg.h"
 
-/* Produce BetaAngle of orbit per spacecraft thermal control handbook eq 2.6
+/* Produce Beta Angle of orbit. i.e. angle between planet-sun line and orbit plane
  * It is assumed that the spacecraft is in orbit about the planet, otherwise it may be nonsense*/
 class BetaAngle : public SysModel {
 public:

@@ -21,7 +21,6 @@
 #include <Eigen/Dense>
 #include "thermal/models/betaAngle.h"
 #include "thermal/thermalTypes.h"
-#include <iostream>
 
 BetaAngle::BetaAngle(){ ;
     this->writeOutputMsg = this->outputMsg.get_writer();
