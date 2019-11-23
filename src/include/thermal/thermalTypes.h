@@ -6,5 +6,7 @@ using SpecificHeat_t = double;  //! [J/kg/K] specific heat of material
 using Area_t = double;  //! [m2]
 using Emittance_t = double;  //! []
 using Absorptance_t = double; //! []
+using Reflectance_t = double; //!< []
 using Flux_t = double;  //! [W/m2]
 using AngleRadian_t = double;  //! []
+using DistanceMeter_t = double; //!< [m]

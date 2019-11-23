@@ -26,7 +26,7 @@
 #include "framework/messaging/writeFunctor.h"
 #include "framework/messaging/message.h"
 #include "dynamics/messages/ScPlusStatesSimMsg.h"
-#include "environment/messages/SolarFluxSimMsg.h"
+#include "environment/messages/FluxSimMsg.h"
 #include "navigation/messages/BodyHeadingSimMsg.h"
 #include "thermal/messages/HeatRateMsg.h"
 #include "thermal/thermalTypes.h"
@@ -40,7 +40,7 @@ public:
     Area_t area;
     Absorptance_t alpha;
     ReadFunctor<ScPlusStatesSimMsg> readScStates;  //!< Mostly to get attitude info
-    ReadFunctor<SolarFluxSimMsg> readSolarFlux;
+    ReadFunctor<FluxSimMsg> readSolarFlux;
     ReadFunctor<BodyHeadingSimMsg> readSunHeading;
     SimMessage<HeatRateMsg> outputHeatRateMsg;
     Eigen::Vector3d nHat_B;  //!< surface normal in sc body frame
