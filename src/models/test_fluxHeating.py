@@ -40,8 +40,8 @@ def test_solarHeating():
 
     s = thermal.FluxHeating()
     s.readScStates = scMsg.get_reader()
-    s.readSolarFlux = solarFluxMsg.get_reader()
-    s.readSunHeading = sunHeadingMsg.get_reader()
+    s.readFlux = solarFluxMsg.get_reader()
+    s.readSourceHeading = sunHeadingMsg.get_reader()
     s.nHat_B = np.array([1.5, 253.6, 345.0]) / np.linalg.norm([1.5, 253.6, 345.0])
     s.UpdateState(0)
 
