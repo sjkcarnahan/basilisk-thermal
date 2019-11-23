@@ -18,14 +18,14 @@
  */
 #include <math.h>
 #include "thermal/thermalConstants.h"
-#include "thermal/models/solarHeating.h"
+#include "thermal/models/fluxHeating.h"
 
 double positiveDotProduct(Eigen::Vector3d v1, Eigen::Vector3d v2){
     double dot = v1.dot(v2);
     return dot > 0 ? dot : 0;
 }
 
-SolarHeating::SolarHeating() :
+FluxHeating::FluxHeating() :
     area(1),
     alpha(1),
     nHat_B({1, 0, 0})
@@ -33,7 +33,7 @@ SolarHeating::SolarHeating() :
     this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();
     }
 
-void SolarHeating::UpdateState(uint64_t CurrentSimNanos){
+void FluxHeating::UpdateState(uint64_t CurrentSimNanos){
     Eigen::Vector3d sunHeading = Eigen::Vector3d(this->readSunHeading().rHat_XB_B);
     double dot = positiveDotProduct(this->nHat_B, sunHeading);
     Flux_t flux = this->readSolarFlux().flux;

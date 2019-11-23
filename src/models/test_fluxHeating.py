@@ -26,8 +26,8 @@ def test_solarHeating():
     sunHeadingWriter = sunHeadingMsg.get_writer()
     sunHeadingWriter(sunHeadingData)
 
-    solarFluxMsg = environment.SolarFluxSimMsgClass()
-    solarFluxMsgData = environment.SolarFluxSimMsg()
+    solarFluxMsg = environment.FluxSimMsgClass()
+    solarFluxMsgData = environment.FluxSimMsg()
     solarFluxMsgData.flux = 1300.
     solarFluxMsgWriter = solarFluxMsg.get_writer()
     solarFluxMsgWriter(solarFluxMsgData)
@@ -38,7 +38,7 @@ def test_solarHeating():
     scMsgWriter = scMsg.get_writer()
     scMsgWriter(scMsgData)
 
-    s = thermal.SolarHeating()
+    s = thermal.FluxHeating()
     s.readScStates = scMsg.get_reader()
     s.readSolarFlux = solarFluxMsg.get_reader()
     s.readSunHeading = sunHeadingMsg.get_reader()

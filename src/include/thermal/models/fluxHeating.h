@@ -31,9 +31,9 @@
 #include "thermal/messages/HeatRateMsg.h"
 #include "thermal/thermalTypes.h"
 
-class SolarHeating: public SysModel {
+class FluxHeating: public SysModel {
 public:
-    SolarHeating();
+    FluxHeating();
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
