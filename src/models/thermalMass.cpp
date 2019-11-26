@@ -18,6 +18,7 @@
  */
 
 #include "thermal/models/thermalMass.h"
+#include <iostream>
 
 ThermalMass::ThermalMass() :
     previous_time(0),
