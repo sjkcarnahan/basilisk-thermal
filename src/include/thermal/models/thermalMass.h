@@ -31,6 +31,7 @@
 class ThermalMass: public SysModel {
 public:
     ThermalMass();
+    void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:

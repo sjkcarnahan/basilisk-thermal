@@ -27,6 +27,8 @@ ThermalMass::ThermalMass() :
     temperature(273.15)
     {this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();}
 
+void ThermalMass::initialize(){ this->writeTemperatureMsg({this->temperature}); }
+
 void ThermalMass::addUpstreamHeatRate(ReadFunctor <HeatRateMsg> reader){
     this->upstreamHeatRateReaders.push_back(reader);
 }

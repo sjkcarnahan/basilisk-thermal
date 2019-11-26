@@ -30,6 +30,7 @@
 class ThermalConductor: public SysModel {
 public:
     ThermalConductor();
+    void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
@@ -37,6 +38,7 @@ public:
     ReadFunctor<TemperatureMsg> readUpstreamTemperature;
     ReadFunctor<TemperatureMsg> readDownstreamTemperature;
     SimMessage<HeatRateMsg> heatRateMsg;
+    HeatRate_t initialHeatRate;
 
 private:
     WriteFunctor<HeatRateMsg> writeHeatRate;
