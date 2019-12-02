@@ -68,6 +68,7 @@ include(FindSWIG)
 include(UseSWIG)
 find_package(PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
 find_package(PythonLibs 3 REQUIRED)
+find_package(Python3 COMPONENTS Interpreter)
 set_source_files_properties(SOURCE include/thermal/thermal.i
         PROPERTIES
         CPLUSPLUS ON
@@ -80,15 +81,14 @@ swig_link_libraries(thermal basilisk-thermal)
 swig_link_libraries(thermal ${PYTHON_LIBRARIES})
 swig_link_libraries(thermal BSK::basilisk-framework)
 include_directories(thermal ${PYTHON_INCLUDE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include )
-set(PYTHON_INSTALL_FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/thermal.py
-        ${CMAKE_CURRENT_BINARY_DIR}/_thermal.so)
+set(PYTHON_LIBRARY_NAME thermal)
+set(CPP_LIBRARY_NAME basilisk-thermal)
 set(SETUP_PY_IN ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in)
 set(SETUP_PY_OUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
 configure_file(${SETUP_PY_IN} ${SETUP_PY_OUT})
 add_custom_target(install-python ALL
         DEPENDS thermal
-        COMMAND python3 ${SETUP_PY_OUT} install)
+        COMMAND Python3::Interpreter ${SETUP_PY_OUT} install)
 
 export(TARGETS basilisk-thermal NAMESPACE BSK:: FILE BSKThermalConfig.cmake)
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)

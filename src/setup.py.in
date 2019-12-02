@@ -2,6 +2,7 @@ import setuptools.command.install
 import shutil
 from distutils.sysconfig import get_python_lib
 import os
+import sys
 
 class CompiledLibInstall(setuptools.command.install.install):
     """
@@ -11,7 +12,22 @@ class CompiledLibInstall(setuptools.command.install.install):
 
     """
     def run(self):
-        filenames = '${PYTHON_INSTALL_FILES}'.split(';')
+        python_library_name = '${PYTHON_LIBRARY_NAME}'
+        cpp_library_name = '${CPP_LIBRARY_NAME}'
+        if sys.platform == 'darwin':
+            filenames = [
+                '_' + python_library_name + '.so',
+                 python_library_name + '.py']
+        elif sys.platform == 'win32':
+            filenames = [
+                '_' + python_library_name + '.pyd',
+                python_library_name + '.py',
+                python_library_name + '.lib',
+                cpp_library_name + '.dll',
+                cpp_library_name + '.lib']
+        else:
+            print('you are using an unsupported platform, ' + sys.platform + ', according to sys.platform. see setup.py.in for supported platforms. the project has not been installed to python.')
+            quit()
         install_dir = get_python_lib() + "/basilisk/"
         if not os.path.isdir(install_dir):
             os.makedirs(install_dir)
