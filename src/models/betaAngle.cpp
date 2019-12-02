@@ -20,11 +20,12 @@
 #include <cmath>
 #include <Eigen/Dense>
 #include "thermal/models/betaAngle.h"
-#include "thermal/thermalTypes.h"
 
-BetaAngle::BetaAngle(){ ;
-    this->writeOutputMsg = this->outputMsg.get_writer();
-}
+BetaAngle::BetaAngle() :
+    initialBeta(0)
+    {this->writeOutputMsg = this->outputMsg.get_writer();}
+
+void BetaAngle::initialize(){this->writeOutputMsg({this->initialBeta});}
 
 void BetaAngle::UpdateState(uint64_t CurrentSimNanos) {
     Eigen::Vector3d scPos(this->readScStates().r_BN_N);

@@ -19,7 +19,14 @@
 
 #include "thermal/models/thermalConductor.h"
 
-ThermalConductor::ThermalConductor() : conductance(1){this->writeHeatRate = this->heatRateMsg.get_writer();}
+ThermalConductor::ThermalConductor() :
+    conductance(1),
+    initialHeatRate(0)
+    {this->writeHeatRate = this->heatRateMsg.get_writer();}
+
+void ThermalConductor::initialize(){
+    this->writeHeatRate({this->initialHeatRate});
+}
 
 void ThermalConductor::UpdateState(uint64_t CurrentSimNanos){
     Temperature_t upstreamTemp = this->readUpstreamTemperature().temperature;

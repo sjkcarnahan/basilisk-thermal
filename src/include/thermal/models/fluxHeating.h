@@ -34,6 +34,7 @@
 class FluxHeating: public SysModel {
 public:
     FluxHeating();
+    void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
@@ -41,11 +42,11 @@ public:
     /* Note: while absorptance often refers to the visible spectrum, here it is used to be the
      * absortance in the same band as the flux provided.*/
     Absorptance_t alpha;
-    ReadFunctor<ScPlusStatesSimMsg> readScStates;  //!< to get attitude info
     ReadFunctor<FluxSimMsg> readFlux;
     ReadFunctor<BodyHeadingSimMsg> readSourceHeading;
     SimMessage<HeatRateMsg> outputHeatRateMsg;
     Eigen::Vector3d nHat_B;  //!< surface normal
+    Flux_t initialHeatRate; //!< will be written in initialize()
 
 private:
     WriteFunctor<HeatRateMsg> writeHeatRateMsg;

@@ -18,6 +18,7 @@
  */
 
 #include "thermal/models/thermalMass.h"
+#include <iostream>
 
 ThermalMass::ThermalMass() :
     previous_time(0),
@@ -25,6 +26,8 @@ ThermalMass::ThermalMass() :
     c_p(1000),
     temperature(273.15)
     {this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();}
+
+void ThermalMass::initialize(){ this->writeTemperatureMsg({this->temperature}); }
 
 void ThermalMass::addUpstreamHeatRate(ReadFunctor <HeatRateMsg> reader){
     this->upstreamHeatRateReaders.push_back(reader);

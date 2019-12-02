@@ -26,12 +26,14 @@
 #include "dynamics/messages/ScPlusStatesSimMsg.h"
 #include "environment/messages/SpicePlanetStateSimMsg.h"
 #include "thermal/messages/BetaAngleMsg.h"
+#include "thermal/thermalTypes.h"
 
 /* Produce Beta Angle of orbit. i.e. angle between planet-sun line and orbit plane
  * It is assumed that the spacecraft is in orbit about the planet, otherwise it may be nonsense*/
 class BetaAngle : public SysModel {
 public:
     BetaAngle();
+    void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
@@ -39,6 +41,7 @@ public:
     ReadFunctor<ScPlusStatesSimMsg> readScStates;
     ReadFunctor<SpicePlanetStateSimMsg> readSunState;
     ReadFunctor<SpicePlanetStateSimMsg> readPlanetState;
+    AngleRadian_t initialBeta;
 private:
     WriteFunctor<BetaAngleMsg> writeOutputMsg;
 };

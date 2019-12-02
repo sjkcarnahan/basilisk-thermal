@@ -1,7 +1,7 @@
 import setuptools.command.install
 import shutil
 from distutils.sysconfig import get_python_lib
-
+import os
 
 class CompiledLibInstall(setuptools.command.install.install):
     """
@@ -12,7 +12,10 @@ class CompiledLibInstall(setuptools.command.install.install):
     """
     def run(self):
         filenames = '${PYTHON_INSTALL_FILES}'.split(';')
-        install_dir = get_python_lib()
+        install_dir = get_python_lib() + "/basilisk/"
+        if not os.path.isdir(install_dir):
+            os.makedirs(install_dir)
+            open(install_dir + '__init__.py', 'w').close()
         [shutil.copy(filename, install_dir) for filename in filenames]
 
 

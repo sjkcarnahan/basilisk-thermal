@@ -20,13 +20,21 @@
 #include "thermal/models/thermalEmitter.h"
 #include "thermal/thermalConstants.h"
 
+HeatRate_t greyBodyFlux(Emittance_t eps, Area_t area, Temperature_t temp){
+    return sigma_SB * eps * area * pow(temp, 4);
+}
+
 ThermalEmitter::ThermalEmitter() :
     area(1),
-    epsilon(1000)
+    epsilon(1000),
+    initialTemperature(0)
     {this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();}
 
+void ThermalEmitter::initialize(){
+    HeatRate_t heatRate = greyBodyFlux(this->epsilon, this->area, this->initialTemperature);
+    this->writeHeatRateMsg({heatRate});
+}
 void ThermalEmitter::UpdateState(uint64_t CurrentSimNanos){
-    Temperature_t temperature = this->readUpstreamTemperature().temperature;
-    HeatRate_t heatRate = sigma_SB * this->epsilon * this->area * pow(temperature, 4);
+    HeatRate_t heatRate = greyBodyFlux(this->epsilon, this->area, this->readUpstreamTemperature().temperature);
     this->writeHeatRateMsg({heatRate});
 }
