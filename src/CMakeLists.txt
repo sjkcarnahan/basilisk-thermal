@@ -65,8 +65,8 @@ target_link_libraries(basilisk-thermal Python::NumPy)
 
 include(FindSWIG)
 include(UseSWIG)
-find_package(PythonLibs 3 REQUIRED)
 find_package(PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
+find_package(PythonLibs 3 REQUIRED)
 set_source_files_properties(SOURCE include/thermal/thermal.i
         PROPERTIES
         CPLUSPLUS ON
