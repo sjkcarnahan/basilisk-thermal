@@ -1,4 +1,4 @@
-#include "thermal/models/thermalMass.h"
+#include "thermal/models/ThermalMass.h"
 
 ThermalMass::ThermalMass() :
     previous_time(0),

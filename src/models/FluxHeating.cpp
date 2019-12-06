@@ -18,7 +18,7 @@
  */
 #include <math.h>
 #include "thermal/thermalConstants.h"
-#include "thermal/models/fluxHeating.h"
+#include "thermal/models/FluxHeating.h"
 
 double positiveDotProduct(Eigen::Vector3d v1, Eigen::Vector3d v2){
     double dot = v1.dot(v2);

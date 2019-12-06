@@ -19,7 +19,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <Eigen/Dense>
-#include "thermal/models/betaAngle.h"
+#include "thermal/models/BetaAngle.h"
 
 BetaAngle::BetaAngle() :
     initialBeta(0)
