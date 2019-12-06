@@ -1,9 +1,10 @@
 import pytest
 import numpy as np
-import thermal
-import dynamics
-import basilisk
-import environment
+
+from basilisk import thermal
+from basilisk import dynamics
+from basilisk import framework
+from basilisk import environment
 
 
 def test_betaAngle():
@@ -13,7 +14,7 @@ def test_betaAngle():
     earth = dynamics.GravBodyData()
     earth.mu = 0.3986004415E+15
 
-    oe = basilisk.classicElements()
+    oe = framework.classicElements()
     oe.a = 1000000
     oe.e = 0
     expected_beta = np.radians(45)

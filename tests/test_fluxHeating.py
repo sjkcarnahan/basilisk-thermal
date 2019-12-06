@@ -1,9 +1,9 @@
 import pytest
 import numpy as np
-import thermal
-import navigation
-import environment
-import dynamics
+from basilisk import thermal
+from basilisk import navigation
+from basilisk import environment
+from basilisk import dynamics
 
 
 def postiveDotProduct(v1, v2):
