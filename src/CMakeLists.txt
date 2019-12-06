@@ -48,7 +48,6 @@ set(sources
         models/FluxHeating.cpp
         models/BetaAngle.cpp
         models/HeatSource.cpp
-        models/ArithmeticEmitter.cpp
         models/ArithmeticSurface.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
