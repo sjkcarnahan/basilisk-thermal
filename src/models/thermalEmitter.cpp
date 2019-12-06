@@ -21,12 +21,12 @@
 #include "thermal/thermalConstants.h"
 
 HeatRate_t greyBodyFlux(Emittance_t eps, Area_t area, Temperature_t temp){
-    return sigma_SB * eps * area * pow(temp, 4);
+    return thermal::constants::sigma_SB * eps * area * pow(temp, 4);
 }
 
 ThermalEmitter::ThermalEmitter() :
     area(1),
-    epsilon(1000),
+    epsilon(1),
     initialTemperature(0)
     {this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();}
 

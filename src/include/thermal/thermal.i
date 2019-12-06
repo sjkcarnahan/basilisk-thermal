@@ -8,6 +8,8 @@
 %eigen_typemaps(Eigen::Vector3d)
 %{
 #include "framework/system_models/sys_model.h"
+#include "thermal/models/ArithmeticEmitter.h"
+#include "thermal/models/ArithmeticSurface.h"
 #include "thermal/models/betaAngle.h"
 #include "thermal/models/fluxHeating.h"
 #include "thermal/models/heatSource.h"
@@ -18,6 +20,8 @@
 #include "thermal/thermalConstants.h"
 %}
 %include "framework/system_models/sys_model.h"
+%include "thermal/models/ArithmeticEmitter.h"
+%include "thermal/models/ArithmeticSurface.h"
 %include "thermal/models/betaAngle.h"
 %include "thermal/models/fluxHeating.h"
 %include "thermal/models/heatSource.h"

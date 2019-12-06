@@ -39,6 +39,7 @@ def test_solarHeating():
     scMsgWriter(scMsgData)
 
     s = thermal.FluxHeating()
+    s.alpha = 0.75
     s.readScStates = scMsg.get_reader()
     s.readFlux = solarFluxMsg.get_reader()
     s.readSourceHeading = sunHeadingMsg.get_reader()

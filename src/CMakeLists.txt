@@ -47,7 +47,9 @@ set(sources
         models/thermalEmitter.cpp
         models/fluxHeating.cpp
         models/betaAngle.cpp
-        models/heatSource.cpp)
+        models/heatSource.cpp
+        models/ArithmeticEmitter.cpp
+        models/ArithmeticSurface.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)

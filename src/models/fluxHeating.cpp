@@ -40,6 +40,6 @@ void FluxHeating::UpdateState(uint64_t CurrentSimNanos){
     Eigen::Vector3d sourceHeading = Eigen::Vector3d(this->readSourceHeading().rHat_XB_B);
     double dot = positiveDotProduct(this->nHat_B, sourceHeading);
     Flux_t flux = this->readFlux().flux;
-    HeatRate_t heatRate = dot * flux * this->area;
+    HeatRate_t heatRate = dot * flux * this->area * this->alpha;
     this->writeHeatRateMsg({heatRate});
 }
