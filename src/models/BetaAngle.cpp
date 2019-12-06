@@ -1,7 +1,7 @@
 #include "thermal/models/BetaAngle.h"
 
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 
 #include <Eigen/Dense>
 
