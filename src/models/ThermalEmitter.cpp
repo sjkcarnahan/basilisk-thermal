@@ -1,9 +1,11 @@
-#include <math.h>
 #include "thermal/models/ThermalEmitter.h"
+
+#include <cmath>
+
 #include "thermal/thermalConstants.h"
 
 HeatRate_t greyBodyFlux(Emittance_t eps, Area_t area, Temperature_t temp){
-    return thermal::constants::sigma_SB * eps * area * pow(temp, 4);
+    return thermal::constants::sigma_SB * eps * area * std::pow(temp, 4);
 }
 
 ThermalEmitter::ThermalEmitter() :
