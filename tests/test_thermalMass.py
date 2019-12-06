@@ -1,5 +1,7 @@
-import thermal
 import pytest
+
+from basilisk import thermal
+
 
 def test_thermalMassTemperature():
     """
