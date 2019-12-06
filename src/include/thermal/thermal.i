@@ -1,5 +1,5 @@
 
-%module(package="basilisk.thermal") thermal
+%module(package="basilisk") thermal
 
 %include "std_vector.i"
 %include "stdint.i"
@@ -8,24 +8,25 @@
 %eigen_typemaps(Eigen::Vector3d)
 %{
 #include "framework/system_models/sys_model.h"
-#include "thermal/models/betaAngle.h"
-#include "thermal/models/fluxHeating.h"
-#include "thermal/models/heatSource.h"
-#include "thermal/models/thermalConductor.h"
-#include "thermal/models/thermalEmitter.h"
-#include "thermal/models/thermalMass.h"
+#include "thermal/models/ArithmeticSurface.h"
+#include "thermal/models/BetaAngle.h"
+#include "thermal/models/FluxHeating.h"
+#include "thermal/models/HeatSource.h"
+#include "thermal/models/ThermalConductor.h"
+#include "thermal/models/ThermalEmitter.h"
+#include "thermal/models/ThermalMass.h"
 #include "thermal/thermalTypes.h"
 #include "thermal/thermalConstants.h"
 %}
 %include "framework/system_models/sys_model.h"
-%include "thermal/models/betaAngle.h"
-%include "thermal/models/fluxHeating.h"
-%include "thermal/models/heatSource.h"
-%include "thermal/models/thermalConductor.h"
-%include "thermal/models/thermalEmitter.h"
-%include "thermal/models/thermalMass.h"
+%include "thermal/models/ArithmeticSurface.h"
+%include "thermal/models/BetaAngle.h"
+%include "thermal/models/FluxHeating.h"
+%include "thermal/models/HeatSource.h"
+%include "thermal/models/ThermalConductor.h"
+%include "thermal/models/ThermalEmitter.h"
+%include "thermal/models/ThermalMass.h"
 %include "thermal/thermalTypes.h"
-%include "thermal/thermalConstants.h"
 %include "thermal/thermalConstants.h"
 
 INSTANTIATE_MESSAGE_TEMPLATE(thermal, BetaAngleMsg)

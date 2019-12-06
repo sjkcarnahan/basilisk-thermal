@@ -42,12 +42,13 @@ find_package(BSKNavigation REQUIRED)
 find_package(Python COMPONENTS NumPy)
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 set(sources
-        models/thermalConductor.cpp
-        models/thermalMass.cpp
-        models/thermalEmitter.cpp
-        models/fluxHeating.cpp
-        models/betaAngle.cpp
-        models/heatSource.cpp)
+        models/ThermalConductor.cpp
+        models/ThermalMass.cpp
+        models/ThermalEmitter.cpp
+        models/FluxHeating.cpp
+        models/BetaAngle.cpp
+        models/HeatSource.cpp
+        models/ArithmeticSurface.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
