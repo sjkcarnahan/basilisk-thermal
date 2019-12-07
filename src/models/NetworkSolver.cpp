@@ -1,5 +1,5 @@
 #include "thermal/models/NetworkSolver.h"
-#include <iostream>
+
 NetworkSolver::NetworkSolver() : numberOfMasses(0){
 }
 void NetworkSolver::initialize(){
@@ -9,7 +9,6 @@ void NetworkSolver::initialize(){
 }
 
 void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
-    std::cout << "ey" <<std::endl;
     uint64_t up = -1;
     uint64_t down = -1;
     this->Amat.fill(0.0);
@@ -35,11 +34,9 @@ void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
     Eigen::VectorXd independentQ;
     independentQ.resize(this->masses.size());
     uint64_t mi = 0;
-    std::cout << "ey3" << std::endl;
     for (auto m : this->masses){
         independentQ(mi++) = m->independentHeatRate();
     }
-    std::cout << independentQ << std::endl;
     Eigen::VectorXd solvedTemperatures = -this->Amat.inverse() * independentQ;
     mi = 0;
     for (auto m : this->masses){
@@ -50,5 +47,4 @@ void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
 void NetworkSolver::addMass(NetworkMass2* mass){
     this->masses.push_back(mass);
     mass->networkPosition = this->numberOfMasses++;
-
 }

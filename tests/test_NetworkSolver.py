@@ -45,14 +45,9 @@ def test_NetworkSolver():
     m1.UpdateState(0)
     m2.UpdateState(0)
     m3.UpdateState(0)
-    # c1.UpdateState(0)
-    # c2.UpdateState(0)
-    # em.UpdateState(0)
     ns.UpdateState(0)
 
-    print(m1.temperature)
-    print(m2.temperature)
-    print(m3.temperature)
+    assert m2.temperature == pytest.approx(197.6446866167)
 
 if __name__ == "__main__":
     test_NetworkSolver()

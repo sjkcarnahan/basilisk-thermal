@@ -13,8 +13,6 @@ def test_NetworkMass2():
     m.mass = 23
     heatMsg = thermal.HeatRateMsgClass()
     m.addIndependentHeatRate(heatMsg.get_reader())
-    path = thermal.HeatPath()
-    m.addPath(path)
 
     expected=1
     assert 1 == pytest.approx(expected)
