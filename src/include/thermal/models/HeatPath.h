@@ -11,7 +11,7 @@
 #include "thermal/messages/TemperatureMsg.h"
 #include "thermal/messages/HeatRateMsg.h"
 #include "thermal/models/NetworkMass2.h"
-
+#include <string>
 class HeatPath: public SysModel {
 public:
     HeatPath(){};

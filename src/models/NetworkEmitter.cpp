@@ -3,7 +3,7 @@
 #include <cmath>
 
 #include "thermal/thermalConstants.h"
-
+#include <iostream>
 HeatRate_t networkEmitterGreyBodyFlux(Emittance_t eps, Area_t area, Temperature_t temp){
     return thermal::constants::sigma_SB * eps * area * std::pow(temp, 4);
 }
@@ -24,8 +24,10 @@ void NetworkEmitter::initialize(){
     this->writeConductance({initialConductance});
 }
 void NetworkEmitter::UpdateState(uint64_t CurrentSimNanos){
-    HeatRate_t heatRate = networkEmitterGreyBodyFlux(this->epsilon, this->area, this->readUpstreamTemperature().temperature);
+    Temperature_t temperature = this->readUpstreamTemperature().temperature;
+    HeatRate_t heatRate = networkEmitterGreyBodyFlux(this->epsilon, this->area, temperature);
     this->writeHeatRate({heatRate});
-    Conductance_t currentConductance = heatRate / this->readUpstreamTemperature().temperature;
-    this->writeConductance({currentConductance});
+    this->conductance = (heatRate / temperature + 4 * this->conductance) / 5;
+    std::cout << "temp: " << temperature << " | cond: " << this->conductance << std::endl;
+    this->writeConductance({this->conductance});
 }
