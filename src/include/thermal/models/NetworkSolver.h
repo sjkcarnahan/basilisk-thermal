@@ -20,7 +20,9 @@ public:
     NetworkSolver();
     void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
-
+private:
+    void populateMatrix();
+    Eigen::VectorXd getIndependentQs();
 public:
     void addMass(NetworkMass2* mass);
     void addPath(HeatPath* path){this->paths.push_back(path);}
@@ -30,4 +32,5 @@ private:
     std::vector<HeatPath*> paths;
     Eigen::MatrixXd Amat;
     uint64_t numberOfMasses;
+
 };

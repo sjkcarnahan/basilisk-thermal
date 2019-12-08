@@ -3,6 +3,7 @@
 NetworkConductor::NetworkConductor(){
     this->conductance = 1;
     this->initialHeatRate = 0;
+    this->isEmitter = false;
     this->writeConductance = this->conductanceMsg.get_writer();
     this->writeHeatRate = this->heatRateMsg.get_writer();
 }

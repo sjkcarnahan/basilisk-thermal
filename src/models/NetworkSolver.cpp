@@ -1,5 +1,5 @@
 #include "thermal/models/NetworkSolver.h"
-#include <iostream>
+
 NetworkSolver::NetworkSolver() : numberOfMasses(0){
 }
 void NetworkSolver::initialize(){
@@ -8,7 +8,7 @@ void NetworkSolver::initialize(){
     this->Amat.fill(0.0);
 }
 
-void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
+void NetworkSolver::populateMatrix(){
     uint64_t up = -1;
     uint64_t down = -1;
     this->Amat.fill(0.0);
@@ -31,14 +31,31 @@ void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
             this->Amat(down, up) += c;
         }
     }
+}
+
+Eigen::VectorXd NetworkSolver::getIndependentQs(){
     Eigen::VectorXd independentQ;
     independentQ.resize(this->masses.size());
     uint64_t mi = 0;
     for (auto m : this->masses){
         independentQ(mi++) = m->independentHeatRate();
     }
-    auto solvedTemperatures = -this->Amat.inverse() * independentQ;
-    mi = 0;
+    return independentQ;
+}
+
+void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
+    Eigen::VectorXd solvedTemperatures;
+    for (int i = 0; i != 10; i++) {
+        this->populateMatrix();
+        Eigen::VectorXd independentQ = this->getIndependentQs();
+        solvedTemperatures = -this->Amat.inverse() * independentQ;
+        for (auto path : this->paths) {
+            if (path->isEmitter) {
+                path->setConductance(solvedTemperatures(path->upstream->networkPosition));
+            }
+        }
+    }
+    uint64_t mi = 0;
     for (auto m : this->masses){
         m->temperature = solvedTemperatures(mi++);
     }

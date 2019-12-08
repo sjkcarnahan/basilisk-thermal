@@ -14,6 +14,7 @@ public:
     NetworkEmitter();
     void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
+    void setConductance(Temperature_t newTemperature) override;
 
 public:
     Area_t area;
