@@ -4,26 +4,29 @@
 #include "framework/messaging/readFunctor.h"
 #include "framework/messaging/writeFunctor.h"
 #include "framework/system_models/sys_model.h"
+
 #include "dynamics/messages/ScPlusStatesSimMsg.h"
+
 #include "environment/messages/SpicePlanetStateSimMsg.h"
 
-#include "thermal/messages/BetaAngleMsg.h"
+#include "thermal/messages/SolarAngleMsg.h"
 #include "thermal/thermalTypes.h"
 
-/* Produce Beta Angle of orbit. i.e. angle between planet-sun line and orbit plane
+/* Produce Solar Angle (Theta). i.e. angle between planet-sun line and planet-sc line IN THE ORBIT PLANE
  * It is assumed that the spacecraft is in orbit about the planet, otherwise it may be nonsense*/
-class BetaAngle : public SysModel {
+class SolarAngle : public SysModel {
 public:
-    BetaAngle();
+    SolarAngle();
     void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 
 public:
-    SimMessage<BetaAngleMsg> outputMsg;
+    SimMessage<SolarAngleMsg> outputMsg;
     ReadFunctor<ScPlusStatesSimMsg> readScStates;
     ReadFunctor<SpicePlanetStateSimMsg> readSunState;
     ReadFunctor<SpicePlanetStateSimMsg> readPlanetState;
-    AngleRadian_t initialBeta;
+    AngleRadian_t initialTheta;
+
 private:
-    WriteFunctor<BetaAngleMsg> writeOutputMsg;
+    WriteFunctor<SolarAngleMsg> writeOutputMsg;
 };

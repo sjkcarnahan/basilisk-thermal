@@ -17,6 +17,7 @@
 #include "thermal/models/NetworkEmitter.h"
 #include "thermal/models/NetworkMass2.h"
 #include "thermal/models/NetworkSolver.h"
+#include "thermal/models/SolarAngle.h"
 #include "thermal/models/ThermalConductor.h"
 #include "thermal/models/ThermalEmitter.h"
 #include "thermal/models/ThermalMass.h"
@@ -33,6 +34,7 @@
 %include "thermal/models/NetworkEmitter.h"
 %include "thermal/models/NetworkMass2.h"
 %include "thermal/models/NetworkSolver.h"
+%include "thermal/models/SolarAngle.h"
 %include "thermal/models/ThermalConductor.h"
 %include "thermal/models/ThermalEmitter.h"
 %include "thermal/models/ThermalMass.h"
@@ -42,6 +44,7 @@
 INSTANTIATE_MESSAGE_TEMPLATE(thermal, BetaAngleMsg)
 INSTANTIATE_MESSAGE_TEMPLATE(thermal, ConductanceMsg)
 INSTANTIATE_MESSAGE_TEMPLATE(thermal, HeatRateMsg)
+INSTANTIATE_MESSAGE_TEMPLATE(thermal, SolarAngleMsg)
 INSTANTIATE_MESSAGE_TEMPLATE(thermal, TemperatureMsg)
 
 

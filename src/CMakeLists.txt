@@ -53,7 +53,8 @@ set(sources
         models/NetworkConductor.cpp
         models/NetworkEmitter.cpp
         models/NetworkMass2.cpp
-        models/NetworkSolver.cpp)
+        models/NetworkSolver.cpp
+        models/SolarAngle.cpp)
 add_library(basilisk-thermal SHARED
         ${sources})
 get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
