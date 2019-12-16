@@ -51,7 +51,11 @@ void NetworkSolver::UpdateState(uint64_t CurrentSimNanos){
         solvedTemperatures = -this->Amat.inverse() * independentQ;
         for (auto path : this->paths) {
             if (path->isEmitter) {
-                path->setConductance(solvedTemperatures(path->upstream->networkPosition));
+                if (path->downstream){
+                    path->setConductance(solvedTemperatures(path->upstream->networkPosition), solvedTemperatures(path->downstream->networkPosition));
+                }else {
+                    path->setConductance(solvedTemperatures(path->upstream->networkPosition), 0);
+                }
             }
         }
     }

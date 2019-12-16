@@ -1,23 +1,22 @@
 #pragma once
 
-#include <vector>
-
 #include "framework/messaging/message.h"
 #include "framework/messaging/readFunctor.h"
 #include "framework/messaging/writeFunctor.h"
 
-#include "thermal/models/HeatPath.h"
 #include "thermal/thermalTypes.h"
+#include "thermal/models/HeatPath.h"
 
-class NetworkEmitter: public HeatPath {
+class NetworkRadiationConductor: public HeatPath {
 public:
-    NetworkEmitter();
+    NetworkRadiationConductor();
     void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
-    void setConductance(Temperature_t newTemperature, Temperature_t temperature2) override;
+    void setConductance(Temperature_t upstreamTemperature, Temperature_t downstreamTemperature) override;
 
 public:
+    double viewFactor;
     Area_t area;
-    Emittance_t epsilon;
-    Temperature_t initialTemperature;
+    Emittance_t epsilon_1;
+    Emittance_t epsilon_2;
 };

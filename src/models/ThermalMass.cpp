@@ -1,5 +1,5 @@
 #include "thermal/models/ThermalMass.h"
-
+#include <iostream>
 ThermalMass::ThermalMass() :
     previous_time(0),
     mass(1),
@@ -15,7 +15,6 @@ void ThermalMass::addUpstreamHeatRate(ReadFunctor <HeatRateMsg> reader){
 
 void ThermalMass::addDownstreamHeatRate(ReadFunctor <HeatRateMsg> reader){
     this->downstreamHeatRateReaders.push_back(reader);
-
 }
 
 void ThermalMass::UpdateState(uint64_t CurrentSimNanos){
@@ -27,6 +26,7 @@ void ThermalMass::UpdateState(uint64_t CurrentSimNanos){
         Qtot -= reader().heatRate;
     }
     double dt = (CurrentSimNanos - this->previous_time) / 1e9;
+    this->previous_time = CurrentSimNanos;
     double thermal_mass = this->mass * this->c_p;
     Temperature_t DT = Qtot * dt / thermal_mass;
     this->temperature += DT;

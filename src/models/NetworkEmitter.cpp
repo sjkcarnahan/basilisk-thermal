@@ -28,11 +28,11 @@ void NetworkEmitter::UpdateState(uint64_t CurrentSimNanos){
     Temperature_t temperature = this->readUpstreamTemperature().temperature;
     HeatRate_t heatRate = networkEmitterGreyBodyFlux(this->epsilon, this->area, temperature);
     this->writeHeatRate({heatRate});
-    this->setConductance(temperature);
+    this->setConductance(temperature, 0);
     this->writeConductance({this->conductance});
 }
 
-void NetworkEmitter::setConductance(Temperature_t newTemperature){
+void NetworkEmitter::setConductance(Temperature_t newTemperature, Temperature_t temperature2){
     Conductance_t newConductance = networkEmitterGreyBodyFlux(this->epsilon, this->area, newTemperature) / newTemperature;
-    this->conductance = (2 * this->conductance + newConductance) / 3;
+    this->conductance = (3 * this->conductance + newConductance) / 4;
 }

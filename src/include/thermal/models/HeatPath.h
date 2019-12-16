@@ -18,7 +18,7 @@ public:
     void initialize() override {};
     void setUpstream(NetworkMass2* mass){this->upstream = mass;}
     void setDownstream(NetworkMass2* mass){this->downstream = mass;}
-    virtual void setConductance(Temperature_t temperature){};
+    virtual void setConductance(Temperature_t temperature, Temperature_t temperature2){};
 public:
     Conductance_t conductance;  // conductance of the pathway from up to down node
     ReadFunctor<TemperatureMsg> readUpstreamTemperature;

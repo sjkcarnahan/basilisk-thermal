@@ -53,6 +53,7 @@ set(sources
         models/NetworkConductor.cpp
         models/NetworkEmitter.cpp
         models/NetworkMass2.cpp
+        models/NetworkRadiationConductor.cpp
         models/NetworkSolver.cpp
         models/SolarAngle.cpp)
 add_library(basilisk-thermal SHARED
