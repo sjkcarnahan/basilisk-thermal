@@ -1,47 +1,46 @@
 cmake_minimum_required(VERSION 3.12)
-if(POLICY CMP0025)
-    cmake_policy(SET CMP0025 NEW)
-endif()
-if(POLICY CMP0042)
-    cmake_policy(SET CMP0025 NEW)
-endif()
-if(POLICY CMP0046)
-    cmake_policy(SET CMP0046 NEW)
-endif()
-if(POLICY CMP0068)
-    cmake_policy(SET CMP0068 NEW)
-endif()
-if(POLICY CMP0076)
-    cmake_policy(SET CMP0078 NEW)
-endif()
 if(POLICY CMP0078)
     cmake_policy(SET CMP0078 NEW)
 endif()
 if(POLICY CMP0086)
     cmake_policy(SET CMP0086 NEW)
 endif()
+
+include(FindSWIG)
+include(UseSWIG)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING
-            "Building Release."
-            FORCE)
-endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 
 project(basilisk-thermal
-        VERSION 0.0.0
-        DESCRIPTION "thermal package for basilisk"
-        HOMEPAGE_URL "my github page"
-        LANGUAGES CXX)
+    VERSION 0.0.0
+    DESCRIPTION "thermal package for basilisk"
+    HOMEPAGE_URL "https://github.com/sjkcarnahan/basilisk-thermal"
+    LANGUAGES CXX)
+
+set(package_name thermal)
+set(framework_name basilisk)
+
+
+find_package(Python3 COMPONENTS Interpreter NumPy) # we typemap eigen to and from numpy
+find_package(Eigen3 3.3 REQUIRED NO_MODULE) # we typemap eigen to and from numpy
 find_package(BSK REQUIRED)
 find_package(BSKDynamics REQUIRED)
 find_package(BSKEnvironment REQUIRED)
 find_package(BSKNavigation REQUIRED)
-find_package(Python COMPONENTS NumPy)
-find_package (Eigen3 3.3 REQUIRED NO_MODULE)
-set(sources
+
+# Need other basilisk package include directories to interface custom types
+get_target_property(framework_include BSK::${framework_name}-framework INTERFACE_INCLUDE_DIRECTORIES)  # this one also needed for linking to utilities
+get_target_property(dynamics_include BSK::${framework_name}-dynamics INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(environment_include BSK::${framework_name}-environment INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(navigation_include BSK::${framework_name}-navigation INTERFACE_INCLUDE_DIRECTORIES)
+set(${framework_name}_includes ${framework_include} ${dynamics_include} ${environment_include} ${navigation_include})
+
+# make the extension library
+add_library(${framework_name}-${package_name} 
+    SHARED
         models/ArithmeticSurface.cpp
         models/BetaAngle.cpp
         models/FluxHeating.cpp
@@ -56,48 +55,45 @@ set(sources
         models/NetworkRadiationConductor.cpp
         models/NetworkSolver.cpp
         models/SolarAngle.cpp)
-add_library(basilisk-thermal SHARED
-        ${sources})
-get_target_property(framework_include BSK::basilisk-framework INTERFACE_INCLUDE_DIRECTORIES)
-target_include_directories(basilisk-thermal
-        PRIVATE
+target_include_directories(${framework_name}-${package_name}
+    PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${framework_include}
-        PUBLIC
+        ${Python3_NumPy_INCLUDE_DIRS}
+        ${${framework_name}_includes}
+        ${dynamics_include}
+    PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(basilisk-thermal BSK::basilisk-framework)
-target_link_libraries(basilisk-thermal BSK::basilisk-dynamics)
-target_link_libraries(basilisk-thermal BSK::basilisk-environment)
-target_link_libraries(basilisk-thermal BSK::basilisk-navigation)
-target_link_libraries(basilisk-thermal Python::NumPy)
-#target_link_libraries(basilisk-thermal Eigen3::Eigen)
+target_link_libraries(${framework_name}-${package_name} BSK::${framework_name}-framework)
 
-include(FindSWIG)
-include(UseSWIG)
-find_package(PythonInterp ${PYTHONLIBS_VERSION_STRING} REQUIRED)
-find_package(PythonLibs 3 REQUIRED)
-find_package(Python3 COMPONENTS Interpreter)
-set_source_files_properties(SOURCE include/thermal/thermal.i
-        PROPERTIES
-        CPLUSPLUS ON
-        USE_TARGET_INCLUDE_DIRECTORIES TRUE)
-SWIG_ADD_LIBRARY(thermal
-        LANGUAGE python
-        TYPE MODULE
-        SOURCES include/thermal/thermal.i)
-swig_link_libraries(thermal basilisk-thermal)
-swig_link_libraries(thermal ${PYTHON_LIBRARIES})
-swig_link_libraries(thermal BSK::basilisk-framework)
-include_directories(thermal ${PYTHON_INCLUDE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/include )
-set(PYTHON_LIBRARY_NAME thermal)
-set(CPP_LIBRARY_NAME basilisk-thermal)
-set(SETUP_PY_IN ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in)
+
+# make the swig library
+set_source_files_properties(
+    SOURCE include/${package_name}/${package_name}.i
+    PROPERTIES CPLUSPLUS ON
+    USE_TARGET_INCLUDE_DIRECTORIES TRUE)
+swig_add_library(${package_name}
+    LANGUAGE python
+    TYPE MODULE
+    SOURCES include/${package_name}/${package_name}.i)
+swig_link_libraries(${package_name} 
+    ${framework_name}-${package_name} 
+    ${Python3_LIBRARIES})
+include_directories(${package_name}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include 
+    ${Python3_INCLUDE_DIRS}
+    ${Python3_NumPy_INCLUDE_DIRS}
+    ${${framework_name}_includes})
+    
+# install python module
 set(SETUP_PY_OUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
-configure_file(${SETUP_PY_IN} ${SETUP_PY_OUT})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in ${SETUP_PY_OUT})
 add_custom_target(install-python ALL
-        DEPENDS thermal
-        COMMAND Python3::Interpreter ${SETUP_PY_OUT} install)
+    DEPENDS ${package_name}
+    COMMAND Python3::Interpreter ${SETUP_PY_OUT} install)
 
-export(TARGETS basilisk-thermal NAMESPACE BSK:: FILE BSKThermalConfig.cmake)
+# export as a cmake package that can be found
+export(TARGETS ${framework_name}-${package_name} 
+    NAMESPACE BSK:: 
+    FILE BSKThermalConfig.cmake)
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
 export(PACKAGE BSKThermal)

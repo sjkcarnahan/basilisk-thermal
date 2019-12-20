@@ -12,8 +12,8 @@ class CompiledLibInstall(setuptools.command.install.install):
 
     """
     def run(self):
-        python_library_name = '${PYTHON_LIBRARY_NAME}'
-        cpp_library_name = '${CPP_LIBRARY_NAME}'
+        python_library_name = '${package_name}'
+        cpp_library_name = '${framework_name}-${package_name}'
         if sys.platform == 'darwin':
             filenames = [
                 '_' + python_library_name + '.so',
@@ -28,7 +28,7 @@ class CompiledLibInstall(setuptools.command.install.install):
         else:
             print('you are using an unsupported platform, ' + sys.platform + ', according to sys.platform. see setup.py.in for supported platforms. the project has not been installed to python.')
             quit()
-        install_dir = get_python_lib() + "/basilisk/"
+        install_dir = get_python_lib() + "/${framework_name}/"
         if not os.path.isdir(install_dir):
             os.makedirs(install_dir)
             open(install_dir + '__init__.py', 'w').close()
