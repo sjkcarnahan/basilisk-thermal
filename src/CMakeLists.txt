@@ -9,8 +9,6 @@ endif()
 include(FindSWIG)
 include(UseSWIG)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
 
@@ -20,9 +18,8 @@ project(basilisk-thermal
     HOMEPAGE_URL "https://github.com/sjkcarnahan/basilisk-thermal"
     LANGUAGES CXX)
 
-set(package_name thermal)
-set(framework_name basilisk)
-
+set(module_name thermal)
+set(package_name basilisk)
 
 find_package(Python3 COMPONENTS Interpreter NumPy) # we typemap eigen to and from numpy
 find_package(Eigen3 3.3 REQUIRED NO_MODULE) # we typemap eigen to and from numpy
@@ -32,14 +29,14 @@ find_package(BSKEnvironment REQUIRED)
 find_package(BSKNavigation REQUIRED)
 
 # Need other basilisk package include directories to interface custom types
-get_target_property(framework_include BSK::${framework_name}-framework INTERFACE_INCLUDE_DIRECTORIES)  # this one also needed for linking to utilities
-get_target_property(dynamics_include BSK::${framework_name}-dynamics INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(environment_include BSK::${framework_name}-environment INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(navigation_include BSK::${framework_name}-navigation INTERFACE_INCLUDE_DIRECTORIES)
-set(${framework_name}_includes ${framework_include} ${dynamics_include} ${environment_include} ${navigation_include})
+get_target_property(framework_include BSK::${package_name}-framework INTERFACE_INCLUDE_DIRECTORIES)  # this one also needed for linking to utilities
+get_target_property(dynamics_include BSK::${package_name}-dynamics INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(environment_include BSK::${package_name}-environment INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(navigation_include BSK::${package_name}-navigation INTERFACE_INCLUDE_DIRECTORIES)
+set(${package_name}_includes ${framework_include} ${dynamics_include} ${environment_include} ${navigation_include})
 
 # make the extension library
-add_library(${framework_name}-${package_name} 
+add_library(${package_name}-${module_name} 
     SHARED
         models/ArithmeticSurface.cpp
         models/BetaAngle.cpp
@@ -55,44 +52,42 @@ add_library(${framework_name}-${package_name}
         models/NetworkRadiationConductor.cpp
         models/NetworkSolver.cpp
         models/SolarAngle.cpp)
-target_include_directories(${framework_name}-${package_name}
+target_include_directories(${package_name}-${module_name}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Python3_NumPy_INCLUDE_DIRS}
-        ${${framework_name}_includes}
-        ${dynamics_include}
+        ${${package_name}_includes}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(${framework_name}-${package_name} BSK::${framework_name}-framework)
+target_link_libraries(${package_name}-${module_name} BSK::${package_name}-framework)
 
 
 # make the swig library
 set_source_files_properties(
-    SOURCE include/${package_name}/${package_name}.i
+    SOURCE include/${module_name}/${module_name}.i
     PROPERTIES CPLUSPLUS ON
     USE_TARGET_INCLUDE_DIRECTORIES TRUE)
-swig_add_library(${package_name}
+swig_add_library(${module_name}
     LANGUAGE python
     TYPE MODULE
-    SOURCES include/${package_name}/${package_name}.i)
-swig_link_libraries(${package_name} 
-    ${framework_name}-${package_name} 
+    SOURCES include/${module_name}/${module_name}.i)
+swig_link_libraries(${module_name} 
+    ${package_name}-${module_name} 
     ${Python3_LIBRARIES})
-include_directories(${package_name}
+include_directories(${module_name}
     ${CMAKE_CURRENT_SOURCE_DIR}/include 
     ${Python3_INCLUDE_DIRS}
     ${Python3_NumPy_INCLUDE_DIRS}
-    ${${framework_name}_includes})
+    ${${package_name}_includes})
     
 # install python module
 set(SETUP_PY_OUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in ${SETUP_PY_OUT})
 add_custom_target(install-python ALL
-    DEPENDS ${package_name}
+    DEPENDS ${module_name}
     COMMAND Python3::Interpreter ${SETUP_PY_OUT} install)
 
 # export as a cmake package that can be found
-export(TARGETS ${framework_name}-${package_name} 
+export(TARGETS ${package_name}-${module_name} 
     NAMESPACE BSK:: 
     FILE BSKThermalConfig.cmake)
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
