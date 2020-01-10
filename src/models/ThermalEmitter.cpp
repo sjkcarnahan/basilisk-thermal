@@ -12,10 +12,18 @@ ThermalEmitter::ThermalEmitter() :
     area(1),
     epsilon(1),
     initialTemperature(0)
-    {this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();}
+    {}
+
+void ThermalEmitter::setProcess(SysProcess* proc){
+    this->process = proc;
+    this->readUpstreamTemperature.process = proc;
+    this->writeHeatRateMsg.process = proc;
+    this->outputHeatRateMsg.process = proc;
+}
 
 void ThermalEmitter::initialize(){
     HeatRate_t heatRate = greyBodyFlux(this->epsilon, this->area, this->initialTemperature);
+    this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();
     this->writeHeatRateMsg({heatRate});
 }
 void ThermalEmitter::UpdateState(uint64_t CurrentSimNanos){

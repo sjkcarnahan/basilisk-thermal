@@ -5,9 +5,18 @@ ThermalMass::ThermalMass() :
     mass(1),
     c_p(1000),
     temperature(273.15)
-    {this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();}
+    {}
 
-void ThermalMass::initialize(){ this->writeTemperatureMsg({this->temperature}); }
+void ThermalMass::setProcess(SysProcess* proc){
+    this->process = proc;
+    this->writeTemperatureMsg.process = proc;
+    this->outputTemperatureMsg.process = proc;
+}
+
+void ThermalMass::initialize(){
+    this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();
+    this->writeTemperatureMsg({this->temperature}); 
+}
 
 void ThermalMass::addUpstreamHeatRate(ReadFunctor <HeatRateMsg> reader){
     this->upstreamHeatRateReaders.push_back(reader);

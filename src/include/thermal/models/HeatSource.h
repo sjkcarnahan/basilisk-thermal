@@ -12,6 +12,7 @@
 class HeatSource: public SysModel {
 public:
     HeatSource();
+    void setProcess(SysProcess* proc) override;
     void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 

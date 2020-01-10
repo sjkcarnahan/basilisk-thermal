@@ -58,7 +58,9 @@ target_include_directories(${package_name}-${module_name}
         ${${package_name}_includes}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_link_libraries(${package_name}-${module_name} BSK::${package_name}-framework)
+target_link_libraries(${package_name}-${module_name} 
+    BSK::${package_name}-framework
+        Eigen3::Eigen)
 
 
 # make the swig library

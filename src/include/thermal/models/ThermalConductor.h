@@ -12,6 +12,7 @@
 class ThermalConductor: public SysModel {
 public:
     ThermalConductor();
+    void setProcess(SysProcess* proc) override;
     void initialize() override;
     void UpdateState(uint64_t CurrentSimNanos) override;
 

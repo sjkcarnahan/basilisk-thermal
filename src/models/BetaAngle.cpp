@@ -7,9 +7,19 @@
 
 BetaAngle::BetaAngle() :
     initialBeta(0)
-    {this->writeOutputMsg = this->outputMsg.get_writer();}
+    {}
 
-void BetaAngle::initialize(){this->writeOutputMsg({this->initialBeta});}
+void BetaAngle::setProcess(SysProcess* proc){
+    this->process = proc;
+    this->readPlanetState.process = proc;
+    this->readScStates.process = proc;
+    this->readSunState.process = proc;
+    this->writeOutputMsg.process = proc;
+    this->outputMsg.process = proc;
+}
+void BetaAngle::initialize(){
+    this->writeOutputMsg = this->outputMsg.get_writer();
+    this->writeOutputMsg({this->initialBeta});}
 
 void BetaAngle::UpdateState(uint64_t CurrentSimNanos) {
     Eigen::Vector3d scPos(this->readScStates().r_BN_N);

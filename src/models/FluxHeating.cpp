@@ -12,11 +12,20 @@ FluxHeating::FluxHeating() :
     alpha(1),
     nHat_B({1, 0, 0}),
     initialHeatRate(0)
-    {
-    this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();
-    }
+    {}
 
-void FluxHeating::initialize(){this->writeHeatRateMsg({this->initialHeatRate});}
+void FluxHeating::setProcess(SysProcess* proc){
+    this->process = proc;
+    this->readFlux.process = proc;
+    this->readSourceHeading.process = proc;
+    this->outputHeatRateMsg.process = proc;
+    this->writeHeatRateMsg.process = proc;
+}
+
+void FluxHeating::initialize(){
+    this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();
+    this->writeHeatRateMsg({this->initialHeatRate});
+}
 
 void FluxHeating::UpdateState(uint64_t CurrentSimNanos){
     Eigen::Vector3d sourceHeading = Eigen::Vector3d(this->readSourceHeading().rHat_XB_B);

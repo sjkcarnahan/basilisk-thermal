@@ -7,12 +7,18 @@ ArithmeticSurface::ArithmeticSurface() :
         temperature(273.15),
         epsilon(1.0),
         area(1.0)
-    {
+    {}
+
+void ArithmeticSurface::setProcess(SysProcess* proc){
+    this->process = proc;
+    this->outputTemperatureMsg.process = proc;
+    this->writeTemperatureMsg.process = proc;
+}
+void ArithmeticSurface::initialize(){ 
     this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();
     this->writeTemperatureMsg.name = "ArithmeticSurface.writeTemperatureMsg";
-    }
-
-void ArithmeticSurface::initialize(){ this->writeTemperatureMsg({this->temperature}); }
+    this->writeTemperatureMsg({this->temperature});
+}
 
 void ArithmeticSurface::addIrradianceHeatRate(ReadFunctor <HeatRateMsg> reader){
     this->irradianceHeatRateReaders.push_back(reader);

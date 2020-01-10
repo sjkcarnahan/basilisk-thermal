@@ -9,9 +9,20 @@
 
 SolarAngle::SolarAngle() :
     initialTheta(0)
-    {this->writeOutputMsg = this->outputMsg.get_writer();}
+    {}
 
-void SolarAngle::initialize(){this->writeOutputMsg({this->initialTheta});}
+void SolarAngle::setProcess(SysProcess* proc){
+    this->process = proc;
+    this->readSunState.process = proc;
+    this->readScStates.process = proc;
+    this->readPlanetState.process = proc;
+    this->writeOutputMsg.process=  proc;
+    this->outputMsg.process = proc;
+}
+
+void SolarAngle::initialize(){
+    this->writeOutputMsg = this->outputMsg.get_writer();
+    this->writeOutputMsg({this->initialTheta});}
 
 void SolarAngle::UpdateState(uint64_t CurrentSimNanos) {
     Eigen::Vector3d r_BN_N(this->readScStates().r_BN_N);
