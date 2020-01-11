@@ -46,11 +46,12 @@ add_library(${package_name}-${module_name}
         models/ThermalConductor.cpp
         models/ThermalEmitter.cpp
         models/ThermalMass.cpp
-        models/NetworkConductor.cpp
-        models/NetworkEmitter.cpp
-        models/NetworkMass2.cpp
-        models/NetworkRadiationConductor.cpp
-        models/NetworkSolver.cpp
+        # models/NetworkConductor.cpp
+        # models/NetworkEmitter.cpp
+        # models/NetworkMass2.cpp
+        # models/NetworkRadiationConductor.cpp
+        # models/NetworkSolver.cpp
+        models/RadiationConductor.cpp
         models/SolarAngle.cpp)
 target_include_directories(${package_name}-${module_name}
     PRIVATE
