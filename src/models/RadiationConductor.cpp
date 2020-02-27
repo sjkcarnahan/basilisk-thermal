@@ -8,7 +8,7 @@ RadiationConductor::RadiationConductor() :
     epsilonDown(1),
     viewFactor(1),
     area(1)
-    {}
+    {this->name = "RadiationConductor";}
 
 void RadiationConductor::setProcess(SysProcess* proc){
     this->process = proc;
@@ -21,6 +21,12 @@ void RadiationConductor::setProcess(SysProcess* proc){
 }
 
 void RadiationConductor::initialize(){
+    this->writeHeatRate.name = this->name + "::writeHeatRate";
+    this->writeConductance.name = this->name + "::writeConductance";
+    this->heatRateMsg.name = this->name + "::heatRateMsg";
+    this->conductanceMsg.name = this->name + "::conductanceMsg";
+    this->readDownstreamTemperature.name = this->name + "::readDownstreamTemperature";
+    this->readUpstreamTemperature.name = this->name + "::readUpstreamTemperature";
     this->writeHeatRate = this->heatRateMsg.get_writer();
     this->writeHeatRate({this->initialHeatRate});
     this->writeConductance = this->conductanceMsg.get_writer();

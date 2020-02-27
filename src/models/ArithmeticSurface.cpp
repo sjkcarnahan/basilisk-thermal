@@ -7,7 +7,7 @@ ArithmeticSurface::ArithmeticSurface() :
         temperature(273.15),
         epsilon(1.0),
         area(1.0)
-    {}
+    {this->name = "ArithmeticSurface";}
 
 void ArithmeticSurface::setProcess(SysProcess* proc){
     this->process = proc;
@@ -15,8 +15,8 @@ void ArithmeticSurface::setProcess(SysProcess* proc){
     this->writeTemperatureMsg.process = proc;
 }
 void ArithmeticSurface::initialize(){ 
+    this->writeTemperatureMsg.name = this->name + "::writeTemperatureMsg";
     this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();
-    this->writeTemperatureMsg.name = "ArithmeticSurface.writeTemperatureMsg";
     this->writeTemperatureMsg({this->temperature});
 }
 

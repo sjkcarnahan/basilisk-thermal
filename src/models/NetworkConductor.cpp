@@ -4,11 +4,14 @@ NetworkConductor::NetworkConductor(){
     this->conductance = 1;
     this->initialHeatRate = 0;
     this->isEmitter = false;
-    this->writeConductance = this->conductanceMsg.get_writer();
-    this->writeHeatRate = this->heatRateMsg.get_writer();
+    this->name = "NetworkConductor";
 }
 
 void NetworkConductor::initialize(){
+    this->writeConductance.name = this->name + "::writeConductance";
+    this->writeHeatRate.name = this->name + "::writeHeatRate";
+    this->writeConductance = this->conductanceMsg.get_writer();
+    this->writeHeatRate = this->heatRateMsg.get_writer();
     this->writeHeatRate({this->initialHeatRate});
     this->writeConductance({this->conductance});
 }

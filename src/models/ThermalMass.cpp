@@ -5,7 +5,7 @@ ThermalMass::ThermalMass() :
     mass(1),
     c_p(1000),
     temperature(273.15)
-    {}
+    {this->name = "ThermalMass";}
 
 void ThermalMass::setProcess(SysProcess* proc){
     this->process = proc;
@@ -14,6 +14,8 @@ void ThermalMass::setProcess(SysProcess* proc){
 }
 
 void ThermalMass::initialize(){
+    this->outputTemperatureMsg.name = this->name + "::outputTemperatureMsg";
+    this->writeTemperatureMsg.name = this->name + "::writeTemperatureMsg";
     this->writeTemperatureMsg = this->outputTemperatureMsg.get_writer();
     this->writeTemperatureMsg({this->temperature}); 
 }

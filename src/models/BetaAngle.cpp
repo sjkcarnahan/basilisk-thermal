@@ -7,7 +7,7 @@
 
 BetaAngle::BetaAngle() :
     initialBeta(0)
-    {}
+    {this->name = "BetaAngle";}
 
 void BetaAngle::setProcess(SysProcess* proc){
     this->process = proc;
@@ -18,6 +18,11 @@ void BetaAngle::setProcess(SysProcess* proc){
     this->outputMsg.process = proc;
 }
 void BetaAngle::initialize(){
+    this->readPlanetState.name = this->name + "::readPlanetState";
+    this->readScStates.name = this->name + "::readScStates";
+    this->readSunState.name = this->name + "::readSunState";
+    this->writeOutputMsg.name = this->name + "::writeOutputMsg";
+    this->outputMsg.name = this->name + "::outputMsg";
     this->writeOutputMsg = this->outputMsg.get_writer();
     this->writeOutputMsg({this->initialBeta});}
 

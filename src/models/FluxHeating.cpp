@@ -12,7 +12,7 @@ FluxHeating::FluxHeating() :
     alpha(1),
     nHat_B({1, 0, 0}),
     initialHeatRate(0)
-    {}
+    {this->name = "FluxHeating";}
 
 void FluxHeating::setProcess(SysProcess* proc){
     this->process = proc;
@@ -23,6 +23,10 @@ void FluxHeating::setProcess(SysProcess* proc){
 }
 
 void FluxHeating::initialize(){
+    this->readFlux.name = this->name + "::readFlux";
+    this->readSourceHeading.name = this->name + "::readSourceHeading";
+    this->outputHeatRateMsg.name = this->name + "::outputHeatRateMsg";
+    this->writeHeatRateMsg.name = this->name + "::writeHeatRateMsg";
     this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();
     this->writeHeatRateMsg({this->initialHeatRate});
 }

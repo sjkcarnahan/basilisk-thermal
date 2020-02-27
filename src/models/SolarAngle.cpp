@@ -9,7 +9,7 @@
 
 SolarAngle::SolarAngle() :
     initialTheta(0)
-    {}
+    {this->name = "SolarAngle";}
 
 void SolarAngle::setProcess(SysProcess* proc){
     this->process = proc;
@@ -21,6 +21,11 @@ void SolarAngle::setProcess(SysProcess* proc){
 }
 
 void SolarAngle::initialize(){
+    this->writeOutputMsg.name = this->name + "::writeOutputMsg";
+    this->outputMsg.name = this->name + "outputMsg";
+    this->readPlanetState.name = this->name + "readPlanetState";
+    this->readScStates.name = this->name + "readScStates";
+    this->readSunState.name = this->name + "readSunState";
     this->writeOutputMsg = this->outputMsg.get_writer();
     this->writeOutputMsg({this->initialTheta});}
 

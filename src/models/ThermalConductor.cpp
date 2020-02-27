@@ -3,7 +3,7 @@
 ThermalConductor::ThermalConductor() :
     conductance(1),
     initialHeatRate(0)
-    {}
+    {this->name = "ThermalConductor";}
 
 void ThermalConductor::setProcess(SysProcess* proc){
     this->process = proc;
@@ -14,6 +14,10 @@ void ThermalConductor::setProcess(SysProcess* proc){
 }
 
 void ThermalConductor::initialize(){
+    this->readUpstreamTemperature.name = this->name + "::readUpstreamTemperature";
+    this->readDownstreamTemperature.name = this->name + "::readDownstreamTemperature";
+    this->writeHeatRate.name = this->name + "::writeHeatRate";
+    this->heatRateMsg.name = this->name + "::heatRateMsg";
     this->writeHeatRate = this->heatRateMsg.get_writer();
     this->writeHeatRate({this->initialHeatRate});
 }
