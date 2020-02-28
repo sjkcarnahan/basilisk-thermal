@@ -23,7 +23,7 @@ void ThermalEmitter::setProcess(SysProcess* proc){
 
 void ThermalEmitter::initialize(){
     HeatRate_t heatRate = greyBodyFlux(this->epsilon, this->area, this->initialTemperature);
-    this->readUpstreamTemperature.name = this->name + "::readupstreamTemperature";
+    this->readUpstreamTemperature.name = this->name + "::readUpstreamTemperature";
     this->writeHeatRateMsg.name = this->name + "writeheatRateMsg";
     this->outputHeatRateMsg.name = this->name + "outputHeatRateMsg";
     this->writeHeatRateMsg = this->outputHeatRateMsg.get_writer();
