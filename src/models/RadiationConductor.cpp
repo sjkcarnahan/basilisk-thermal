@@ -1,6 +1,8 @@
 #include "thermal/models/RadiationConductor.h"
 #include "thermal/thermalConstants.h"
 
+#include <math.h>
+
 RadiationConductor::RadiationConductor() :
     conductance(1),
     initialHeatRate(0),

@@ -25,6 +25,12 @@ class CompiledLibInstall(setuptools.command.install.install):
                 python_library_name + '.lib',
                 cpp_library_name + '.dll',
                 cpp_library_name + '.lib']
+        elif sys.platform == 'linux':
+            filenames = [
+                python_library_name + '.py',
+                '_' + python_library_name + '.so',
+                'lib' + cpp_library_name + '.so'
+            ]
         else:
             print('you are using an unsupported platform, ' + sys.platform + ', according to sys.platform. see setup.py.in for supported platforms. the project has not been installed to python.')
             quit()
